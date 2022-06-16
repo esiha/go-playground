@@ -2,6 +2,7 @@ package mower
 
 import (
 	"go-playground/domain/direction"
+	"go-playground/domain/lawn"
 	"go-playground/domain/point"
 )
 
@@ -25,6 +26,19 @@ func (m *Mower) TurnRight() {
 	m.direction = m.direction.Right90Degrees()
 }
 
-func (m *Mower) Advance() {
-	m.position = m.position.Plus(m.direction.AsVector())
+func (m *Mower) Advance(l lawn.Lawn) {
+
+	nextPosition := m.position.Plus(m.direction.AsVector())
+	if l.Contains(nextPosition) {
+		m.position = nextPosition
+	}
+
+}
+
+func (m *Mower) Position() point.Point {
+	return m.position
+}
+
+func (m *Mower) Direction() direction.Direction {
+	return m.direction
 }

@@ -2,6 +2,7 @@ package mower
 
 import (
 	"go-playground/domain/direction"
+	"go-playground/domain/lawn"
 	"go-playground/domain/point"
 	"testing"
 )
@@ -67,7 +68,7 @@ func TestMower_Advance(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			mower := New(p, tt.direction)
-			mower.Advance()
+			mower.Advance(lawn.Rectangular(point.New(5, 5)))
 			actual := mower.position
 			if actual != tt.expected {
 				t.Errorf("Expected %v, got %v", tt.expected, actual)
