@@ -1,28 +1,29 @@
 package controller
 
 import (
-	"go-playground/domain/instruction"
 	"go-playground/domain/lawn"
 	"go-playground/domain/mower"
 )
 
 type Controller struct {
-	mower        mower.Mower
-	instructions []instruction.Instruction
-	lawn         lawn.Lawn
+	mowers []mower.Mower
+	lawn   lawn.Lawn
+}
+
+func New(mowers []mower.Mower, l lawn.Lawn) Controller {
+	return Controller{mowers, l}
 }
 
 func (c *Controller) Run() {
-	for _, i := range c.instructions {
-		switch i {
-		case instruction.Advance:
-			c.mower.Advance(c.lawn)
-		case instruction.TurnRight:
-			c.mower.TurnRight()
-		case instruction.TurnLeft:
-			c.mower.TurnLeft()
-		default:
-			panic("Not handled")
-		}
+	for i := range c.mowers {
+		c.mowers[i].RunOn(c.lawn)
 	}
+}
+
+func (c *Controller) MowersPositions() []mower.Position {
+	positions := make([]mower.Position, len(c.mowers))
+	for i, m := range c.mowers {
+		positions[i] = m.CurrentPosition()
+	}
+	return positions
 }
