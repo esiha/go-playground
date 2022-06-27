@@ -1,4 +1,4 @@
-package file
+package main
 
 import (
 	"bufio"
@@ -15,23 +15,23 @@ import (
 	"strings"
 )
 
-type Newer struct {
+type ConfigReader struct {
 	reader io.Reader
 }
 
-func NewControllerNewer(path string) (Newer, error) {
+func NewConfigReader(path string) (ConfigReader, error) {
 	if f, err := os.Open(path); err != nil {
-		return Newer{}, err
+		return ConfigReader{}, err
 	} else {
 		return newFromReader(f), nil
 	}
 }
 
-func newFromReader(reader io.Reader) Newer {
-	return Newer{reader}
+func newFromReader(reader io.Reader) ConfigReader {
+	return ConfigReader{reader}
 }
 
-func (n *Newer) New() (controller.Controller, error) {
+func (n *ConfigReader) ReadConfig() (controller.Controller, error) {
 	scanner := bufio.NewScanner(n.reader)
 	if !scanner.Scan() {
 		return controller.Controller{}, fmt.Errorf("empty file")

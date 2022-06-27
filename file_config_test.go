@@ -1,4 +1,4 @@
-package file
+package main
 
 import (
 	"go-playground/domain/controller"
@@ -127,9 +127,9 @@ func TestNewer_New(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			newer := newFromReader(reader(tt.input))
+			configReader := newFromReader(reader(tt.input))
 
-			got, err := newer.New()
+			got, err := configReader.ReadConfig()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Run() error = %v, wantErr %v", err, tt.wantErr)
 				return
