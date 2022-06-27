@@ -25,3 +25,11 @@ func (pos *Position) Right90Degrees() Position {
 func (pos *Position) TranslateOnce() Position {
 	return Position{pos.point.Plus(pos.direction.AsVector()), pos.direction}
 }
+
+func (pos *Position) Point() point.Point {
+	return pos.point
+}
+
+func (pos *Position) Direction() direction.Direction {
+	return pos.direction
+}
