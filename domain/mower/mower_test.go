@@ -9,13 +9,13 @@ import (
 
 func TestMower_TurnLeft(t *testing.T) {
 	north := direction.North
-	mower := New(aPoint(), north)
+	mower := New(NewPosition(aPoint(), north))
 
 	mower.TurnLeft()
 
 	expected := north.Left90Degrees()
-	if mower.direction != expected {
-		t.Fatalf("Expected mower direction to be %v, got %v", expected, mower.direction)
+	if mower.position.direction != expected {
+		t.Fatalf("Expected mower direction to be %v, got %v", expected, mower.position.direction)
 	}
 }
 
@@ -25,13 +25,13 @@ func aPoint() point.Point {
 
 func TestMower_TurnRight(t *testing.T) {
 	west := direction.West
-	mower := New(aPoint(), west)
+	mower := New(NewPosition(aPoint(), west))
 
 	mower.TurnRight()
 
 	expected := west.Right90Degrees()
-	if mower.direction != expected {
-		t.Fatalf("Expected mower direction to be %v, got %v", expected, mower.direction)
+	if mower.position.direction != expected {
+		t.Fatalf("Expected mower direction to be %v, got %v", expected, mower.position.direction)
 	}
 }
 
@@ -67,9 +67,9 @@ func TestMower_Advance(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			mower := New(p, tt.direction)
+			mower := New(NewPosition(p, tt.direction))
 			mower.Advance(lawn.Rectangular(point.New(5, 5)))
-			actual := mower.position
+			actual := mower.position.point
 			if actual != tt.expected {
 				t.Errorf("Expected %v, got %v", tt.expected, actual)
 			}

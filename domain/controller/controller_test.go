@@ -10,7 +10,7 @@ import (
 )
 
 func TestController_Run_oneMower(t *testing.T) {
-	m := mower.New(point.New(0, 0), direction.North)
+	m := mower.New(mower.NewPosition(point.New(0, 0), direction.North))
 	i := []instruction.Instruction{
 		instruction.Advance, instruction.TurnRight, instruction.Advance, instruction.TurnLeft,
 	}
@@ -36,7 +36,7 @@ func TestController_Run_oneMower(t *testing.T) {
 }
 
 func TestController_Run_remainsInLawn(t *testing.T) {
-	m := mower.New(point.New(4, 4), direction.North)
+	m := mower.New(mower.NewPosition(point.New(4, 4), direction.North))
 	i := []instruction.Instruction{
 		instruction.Advance, instruction.Advance, instruction.TurnRight, instruction.Advance, instruction.Advance,
 	}
